@@ -1,0 +1,121 @@
+{% extends "authlayout.html" %}
+{% block content %}
+<div class="container bg-light" style="margin-top: 80px;max-width: 400px;">
+    <div class="container">
+        <h1 class="text-center pt-3 text-warning">Teacher Signup</h1>
+        {% for m in messages %}
+            <h3 class="text-center text-success pt-2">{{m}}</h3>
+        {% endfor %}
+        <form enctype="multipart/form-data" action="{% url 'addteacher' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group"></div>
+            <div class="row mt-5">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="First Name" name="fname">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Last Name" name="lname">
+                </div>
+            </div>
+            <div class="form-group"></div>
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="UserName" name="uname">
+                </div>
+            </div>
+            <div class="form-group"></div>
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Age" name="age">
+                </div>
+            </div>
+            <div class="form-group"></div>
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Phone Number" name="contact" id="mobileno">
+                    <small id="moberror" class="text-danger"></small>
+                </div>
+            </div>
+            <div class="form-group"></div>
+            <div class="row">
+                <div class="col">
+                    <input type="email" class="form-control" placeholder="Email" name="email" id="emailid">
+                    <small id="emailerror" class="text-danger"></small>
+                </div>
+            </div>
+            <div class="form-group"></div>
+            <div class="row">
+                <div class="col">
+                    <input type="hidden" class="form-control" name="utype" value="2">
+                </div>
+            </div>
+            <!-- <div class="form-group"></div> -->
+            <div class="row">
+                <div class="col">
+                    <label style="margin-top: 2px;">Upload Your Photo</label>
+                    <input type="file" class="form-control" name="img">
+                </div>
+            </div>
+            <div class="form-group"></div>
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" name="sel">
+                        <option>select an option</option>
+                        <option value="java">java</option>
+                        <option value="python">python</option>
+                        <option value="c">c</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row text-center pb-3 pt-2">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary mt-2">Sign Up</button>
+                </div>
+            </div>
+        </form>
+        <script>
+            // get elements
+            mobileno=document.getElementById("mobileno");
+            email=document.getElementById("emailid");
+
+
+
+            // addevents
+            mobileno.addEventListener("input",validateMobileNo);
+            email.addEventListener("input",validateEmail);
+
+            // moberror=document.getElementById("moberror");
+            function validateMobileNo(){
+                mobilepattern= /^[0-9]{0,10}$/;
+                if(!mobilepattern.test(mobileno.value)){
+                    moberror.textContent="only digits are allowed";
+                    return;
+                }
+
+if(mobileno.value.length < 10)
+                {
+                    moberror.textContent="Mobile number should be 10 digits";
+                }
+                else
+                {
+                    moberror.textContent="";
+                }
+            }
+
+            function validateEmail(){
+                emailerror=document.getElementById("emailerror");
+                emailpattern= /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if(!emailpattern.test(email.value)){
+                    emailerror.textContent="Please enter valid email address";
+                    return;
+                }
+                else
+                {
+                    emailerror.textContent="";
+                }
+            }
+
+        </script>
+    </div>
+</div>
+{% endblock %}
